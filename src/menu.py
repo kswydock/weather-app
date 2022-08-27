@@ -60,11 +60,14 @@ if __name__ == "__main__":
                                Please enter a choice: """
         )
         try:
-
-            if user_selection.upper() in menu_options:
-                menu_options[user_selection.upper()]()
+            input_val = user_selection.strip().upper()
+            if input_val in menu_options:
+                menu_options[input_val]()
             else:
                 print("Invalid option")
         except ValueError as err:
+            print("\nERROR: Please see below:")
+            print(err)
+        except KeyError as err:
             print("\nERROR: Please see below:")
             print(err)

@@ -1,4 +1,5 @@
 import calendar
+import time
 import typing
 
 import geocoder
@@ -40,10 +41,15 @@ def get_current_temp(coord_string: str) -> int:
 
     req_1 = requests.get(api_string).json()
     forecast_url = req_1["properties"]["forecastHourly"]
-
+    time.sleep(.05)
     forecast = requests.get(forecast_url).json()
-    forecast_dict = forecast["properties"]["periods"]
-    current_temp = forecast_dict[00]["temperature"]
+
+    time.sleep(.05)
+    try:
+        forecast_dict = forecast["properties"]["periods"]
+        current_temp = forecast_dict[00]["temperature"]
+    except KeyError:
+        raise KeyError("The server did not respond correctly. Please try again.")
 
     return current_temp
 
@@ -53,11 +59,17 @@ def get_forecast(coord_string: str) -> list:
     api_string = API_ADDRESS + coord_string
     forecast_list = []
     req_1 = requests.get(api_string).json()
+    time.sleep(.05)
     forecast_url = req_1["properties"]["forecast"]
     forecast = requests.get(forecast_url).json()
-    forecast_dict = forecast["properties"]["periods"]
-    day_list = tuple(calendar.day_name)
 
+    time.sleep(.05)
+    try:
+        forecast_dict = forecast["properties"]["periods"]
+        day_list = tuple(calendar.day_name)
+    except KeyError:
+        raise KeyError("The server did not respond correctly. Please try again.")
+        
     forecast_list.append(forecast_dict[0])
 
     for forecast_data in forecast_dict:
