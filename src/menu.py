@@ -64,9 +64,9 @@ if __name__ == "__main__":
             if input_val in menu_options:
                 menu_options[input_val]()
             else:
-                print("Invalid option")
+                print("Invalid option. Please try again.")
         except ValueError as err:
-            print("\nERROR: Please see below:")
+            print("\nLOCATION ERROR: Please see below:")
             print(err)
         except KeyError as err:
             print("\nERROR: Please see below:")
